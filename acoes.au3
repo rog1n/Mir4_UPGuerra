@@ -165,6 +165,20 @@ Func DeslocamentoRapido()
    MouseClicar($x, $y)
 EndFunc
 
+Func DeslocamentoRapidoTela()
+   $x = porcentagem($xd, $x0, 53.5)
+   $y = porcentagem($yd, $y0, 66)
+   MouseClicar($x, $y)
+EndFunc
+
+Func EntrarAgora()
+   $x = porcentagem($xd, $x0, 73.71)
+   $y = porcentagem($yd, $y0, 51)
+   MouseClicar($x, $y)
+EndFunc
+
+
+
 
 
 
