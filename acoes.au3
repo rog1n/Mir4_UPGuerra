@@ -40,31 +40,12 @@ Func InimigoProximo()
 				msg("Inimigo Encontrando")
 			EndIf
 		 Case Else
-			ConsoleWrite("Alarme Falso - Inimigo não encontrado" & @CRLF)
+			Msg("Alarme Falso - Inimigo não encontrado")
 			$retorno = 0
 	  EndSwitch
    Else
 	  $retorno = 0
 	  ;msg("INIMIGOS NÃO ENCONTRADOS")
-   EndIf
-   return $retorno
-EndFunc
-
-Func InimigoProximo2();DESATIVADA
-   ;msg("procurando inimigos.........")
-   Local $aCoord = PixelSearch(porcentagem($xd, $x0, 7), porcentagem($yd, $y0, 17), porcentagem($xd, $x0, 10), porcentagem($yd, $y0, 35), 0xC30507, 10);procura o vermelho
-   If Not @error Then
-	  ;Local $aCoord2 = PixelSearch(porcentagem($xd, $x0, 5), porcentagem($yd, $y0, 15), porcentagem($xd, $x0, 7),porcentagem($yd, $y0, 35), 748897, 60)
-	;  If Not @error Then
-	  $retorno = 1
-	 ;  msg("Inimigo Encontrado")
-	;  Else
-	  ; $retorno = 0
-	  ; msg("Alarme Falso....Deve ser um monstro")
-   ;EndIf
-   Else
-	  $retorno = 0
-	  ;msg("procurando inimigos........NÃO ENCONTRANDO")
    EndIf
    return $retorno
 EndFunc

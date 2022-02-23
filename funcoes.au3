@@ -49,8 +49,11 @@ Func Restart()
 EndFunc
 
 Func msg($mensagem)
+   If Not ($ultimaMsg == $mensagem) Then
    Tooltip("VOLTAS:" & $qtdv & " | MORTES:" & $qtdm & " | "& $mensagem, $tx, $ty)
    ConsoleWrite(_NowTime() & " VOLTAS:" & $qtdv & " | MORTES:" & $qtdm & " | "& $mensagem & @CRLF)
+   $ultimaMsg = $mensagem
+   EndIf
 EndFunc
 
 Func Mouseclicar($x, $y)
@@ -66,15 +69,17 @@ Func CalculaPorcentagem()
 	  $x = $x + 1
 	  $cor = Hex(PixelGetColor($x, $y), 6)
    WEnd
+   ConsoleWrite("XP: " & round((($x - $x0)*100) / $xd, 2) & @CRLF)
    return round((($x - $x0)*100) / $xd, 2)
 EndFunc
 
 
 Func DetectarMorte()
+   ;limpaTela()
    $morreu = 0
    Local $aCoord = PixelSearch(porcentagem($xd, $x0, 1), porcentagem($yd, $y0, 1.5), porcentagem($xd, $x0, 2), porcentagem($yd, $y0, 3), 0xB5AE8A, 60);lvl aparecendo
    If @error Then
-	  msg("Iiiii morreu...")
+	  msg("iiiii morreu...")
 	  $morreu = 1
    EndIf
 return $morreu

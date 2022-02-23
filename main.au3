@@ -13,7 +13,7 @@ Global $Mapas = [CaminhoCeuSuperior_Elite_B2, LabirintoCaminhoParaCeu_3F_B1, Lab
 ;==========================
 Global $tela = "Mir4G[1]"
 Global $rodando
-Global $qtdv=0 ; quantidade de voltas
+Global $qtdv=-1 ; quantidade de voltas
 Global $qtdm=0 ;quantidade de mortes
 Global $x0
 Global $x1
@@ -23,7 +23,8 @@ Global $yd
 Global $xd
 Global $tx
 Global $ty
-Global $porcentagemInicial = CalculaPorcentagem()
+Global $porcentagemInicial
+Global $ultimaMsg = ""
 
 HotKeySet("{NUMPADDIV}", "DetectarMorte")
 HotKeySet("{NUMPADADD}", "Encontrar_Valores")
@@ -44,11 +45,15 @@ $tx = $winsize[0]
 $ty = $winsize[1]
 $x0 = $winsize[0] + $borderSize
 $y0 = $winsize[1] + $captionSize
-
+$porcentagemInicial = CalculaPorcentagem()
 pause()
 
 While 1
-   If  $porcentagemInicial < CalculaPorcentagem() Then
+	While DetectarMorte() = 1
+	  Sleep(100)
+	WEnd
+	  ConsoleWrite("Inicial: " & $porcentagemInicial & " | Atual: " & CalculaPorcentagem() & @CRLF)
+   If  CalculaPorcentagem() < $porcentagemInicial Then
 	  $qtdm = $qtdm + 1
 	  $porcentagemInicial = CalculaPorcentagem()
 	  If $qtdm = 2 Then
@@ -68,8 +73,8 @@ While 1
 	  $inimigo = 0
 	  $morte = 0
 	 ; enconomiaEnergia()
-	  msg("Up Ativado....")
 	  While $inimigo = 0 and $morte = 0
+		 msg("Up Ativado....")
 		 ;$inimigo = SaiuEcononomiaEnergia()
 		 $inimigo = InimigoProximo()
 		 $morte = DetectarMorte()
