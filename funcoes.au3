@@ -7,7 +7,6 @@ Func _restart()
     Exit
 EndFunc
 
-
  Func Encontrar_Valores()
    While 1
         $aMouse = MouseGetPos()
@@ -18,22 +17,11 @@ EndFunc
    $retorno = $original + ($tamanho * ($deslocamento / 100))
 EndFunc
 
-
  Func Encontrar_Cor()
-   ;While 1
-        $x = porcentagem($xd, $x0, 4)
-		$x2 = porcentagem($xd, $x0, 8)
-		$y = porcentagem($yd, $y0, 15)
-		$y2 = porcentagem($yd, $y0, 22)
-		$returnX = 0
-		$returnY = 0
-		local $search = _ImageSearch('cruz.png', 1, $x, $y, 0, 0)
-		ConsoleWrite("o search retorna= " & $search & @CRLF)
-   If $search = 1 Then
-   MouseMove($returnx, $returny, 10)
-   EndIf
-		;;$cor = Hex(PixelGetColor($x, $y),6)
-		;ConsoleWrite($cor & @CRLF)
+   $x = porcentagem($xd, $x0, 5)
+   $y = porcentagem($yd, $y0, 89.1)
+		$cor = Hex(PixelGetColor($x, $y),6)
+		ConsoleWrite($cor & @CRLF)
   ; WEnd
 
 EndFunc
@@ -62,7 +50,7 @@ EndFunc
 
 Func msg($mensagem)
    Tooltip("VOLTAS:" & $qtdv & " | MORTES:" & $qtdm & " | "& $mensagem, $tx, $ty)
-   ConsoleWrite("VOLTAS:" & $qtdv & " | MORTES:" & $qtdm & " | "& $mensagem & @CRLF)
+   ConsoleWrite(_NowTime() & " VOLTAS:" & $qtdv & " | MORTES:" & $qtdm & " | "& $mensagem & @CRLF)
 EndFunc
 
 Func Mouseclicar($x, $y)
@@ -70,8 +58,27 @@ Func Mouseclicar($x, $y)
    Sleep(random(300,800))
 EndFunc
 
+Func CalculaPorcentagem()
+   $x = $x0
+   $y = porcentagem($yd, $y0, 89.1)
+   $cor = Hex(PixelGetColor($x, $y), 6)
+   While $cor == '00F2FF'
+	  $x = $x + 1
+	  $cor = Hex(PixelGetColor($x, $y), 6)
+   WEnd
+   return round((($x - $x0)*100) / $xd, 2)
+EndFunc
 
 
+Func DetectarMorte()
+   $morreu = 0
+   Local $aCoord = PixelSearch(porcentagem($xd, $x0, 1), porcentagem($yd, $y0, 1.5), porcentagem($xd, $x0, 2), porcentagem($yd, $y0, 3), 0xB5AE8A, 60);lvl aparecendo
+   If @error Then
+	  msg("Iiiii morreu...")
+	  $morreu = 1
+   EndIf
+return $morreu
+EndFunc
 
 
 
