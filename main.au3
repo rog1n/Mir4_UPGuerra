@@ -1,13 +1,15 @@
 #include <funcoes.au3>
 #include <mapas.au3>
 #include <acoes.au3>
+#include <Date.au3>
+
 
 Global $AutoAtacar = "{b}"
 Global $TeclaTeleporte = "{8}"
 Global $TeclaUlt = "{r}"
 Global $TeclaDash = "{LSHIFT}"
 ;Global $Mapas = [CaminhoCeuSuperior_Elite_B2, LabirintoCaminhoParaCeu_3F_B2]
-Global $Mapas = [LabirintoCaminhoParaCeu_3F_B5]
+Global $Mapas = [CaminhoCeuSuperior_Elite_B2, LabirintoCaminhoParaCeu_3F_B1, LabirintoCaminhoParaCeu_3F_B2, LabirintoCaminhoParaCeu_3F_B3, LabirintoCaminhoParaCeu_3F_B4, LabirintoCaminhoParaCeu_3F_B5]
 ;==========================
 Global $tela = "Mir4G[1]"
 Global $rodando
@@ -21,10 +23,12 @@ Global $yd
 Global $xd
 Global $tx
 Global $ty
-HotKeySet("{NUMPADDIV}", "InimigoProximo2")
+Global $porcentagemInicial = CalculaPorcentagem()
+
+HotKeySet("{NUMPADDIV}", "DetectarMorte")
 HotKeySet("{NUMPADADD}", "Encontrar_Valores")
 HotKeySet("{NUMPADMULT}", "_restart")
-hotkeyset("{pause}","pause")
+HotKeySet("{pause}","pause")
 HotKeySet("{end}", "sair")
 $cSize = WinGetClientSize($tela)
 $winsize = WinGetPos($tela)
@@ -40,32 +44,20 @@ $tx = $winsize[0]
 $ty = $winsize[1]
 $x0 = $winsize[0] + $borderSize
 $y0 = $winsize[1] + $captionSize
-$x1 = $x0 +  $xd - ($borderSize * 2)
-$y1 = $y0 +  $cSize[1]
-msg("Aguardando....")
-
 
 pause()
 
-
-Func teste()
-   $StartSec = @Sec - 1
-   While 1
-	;ConsoleWrite($StartSec & @CRLF)
-   If $StartSec <= 0 Then $StartSec = 1 EndIf
-   ConsoleWrite($StartSec & " | " & @Sec & @CRLF)
-   If @Sec == $StartSec Then
-		 msg("Falhou na confirmação.........")
-		 ExitLoop
-	  EndIf
-WEnd
-EndFunc
-
 While 1
+   If  $porcentagemInicial < CalculaPorcentagem() Then
+	  $qtdm = $qtdm + 1
+	  $porcentagemInicial = CalculaPorcentagem()
+	  If $qtdm = 2 Then
+		 Exit
+	  EndIf
+   EndIf
    $qtdv = $qtdv + 1
    $t = Ubound($Mapas)-1
    $Mapas[Random(0, $t, 1)]()
-   Aguardar()
    $inimigo = InimigoProximo()
    if $inimigo == 1 Then
 	  Fugir()
@@ -74,17 +66,23 @@ While 1
    Else
 	  Atacar()
 	  $inimigo = 0
+	  $morte = 0
 	 ; enconomiaEnergia()
 	  msg("Up Ativado....")
-	  While $inimigo = 0
+	  While $inimigo = 0 and $morte = 0
 		 ;$inimigo = SaiuEcononomiaEnergia()
 		 $inimigo = InimigoProximo()
+		 $morte = DetectarMorte()
 		 Sleep(100)
 	  WEnd
 	  Fugir()
 	  Aguardar()
 	  msg("Aguardando na Cidade....")
-	  Sleep(random(60000,120000,1))
+	  if $morte == 1 Then
+		 Sleep(random(180000,240000,1))
+	  Else
+		 Sleep(random(60000,120000,1))
+	  EndIf
    EndIf
 WEnd
 
