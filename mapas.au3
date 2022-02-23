@@ -40,7 +40,7 @@ Func Elite();Seleciona o Mapa Elite
    MouseClicar($x, $y)
 EndFunc
 
-;===========================================================
+;======================MAPAS=====================================
 Func AreaDoCentroEspiritual();
    $x = porcentagem($xd, $x0, 15.7)
    $y = porcentagem($yd, $y0, 32.7)
@@ -65,6 +65,7 @@ Func LabirintoCaminhoParaCeu_3F_B1()
    $y = porcentagem($yd, $y0, 42.5)
    MouseClicar($x, $y) ;Boss 2
    DeslocamentoRapido()
+   Aguardar()
 EndFunc
 
 Func LabirintoCaminhoParaCeu_3F_B2()
@@ -79,6 +80,7 @@ Func LabirintoCaminhoParaCeu_3F_B2()
    $y = porcentagem($yd, $y0, 48.5)
    MouseClicar($x, $y) ;Boss 2
    DeslocamentoRapido()
+   Aguardar()
 EndFunc
 
 Func LabirintoCaminhoParaCeu_3F_B3()
@@ -93,6 +95,7 @@ Func LabirintoCaminhoParaCeu_3F_B3()
    $y = porcentagem($yd, $y0, 55.5)
    MouseClicar($x, $y) ;Boss 2
    DeslocamentoRapido()
+   Aguardar()
 EndFunc
 
 Func LabirintoCaminhoParaCeu_3F_B4()
@@ -107,6 +110,7 @@ Func LabirintoCaminhoParaCeu_3F_B4()
    $y = porcentagem($yd, $y0, 62)
    MouseClicar($x, $y) ;Boss 2
    DeslocamentoRapido()
+   Aguardar()
 EndFunc
 
 Func LabirintoCaminhoParaCeu_3F_B5()
@@ -121,6 +125,7 @@ Func LabirintoCaminhoParaCeu_3F_B5()
    $y = porcentagem($yd, $y0, 69)
    MouseClicar($x, $y) ;Boss 2
    DeslocamentoRapido()
+   Aguardar()
 EndFunc
 
 ;-------------------------------------------------
@@ -129,6 +134,7 @@ Func PicoDoCaminhoParaCeu()
    $y = porcentagem($yd, $y0, 22.6)
    MouseClicar($x, $y)
 EndFunc
+
 Func CaminhoCeuSuperior_Elite_B2()
    msg("Movendo Para o Mapa")
    LimpaTela()
@@ -142,9 +148,32 @@ Func CaminhoCeuSuperior_Elite_B2()
    $y = porcentagem($yd, $y0, 41)
    MouseClicar($x, $y) ;Boss 2
    DeslocamentoRapido()
+   Aguardar()
 EndFunc
 
-;===========================================================
+
+;####
+Func CaminhoCeuSuperior_Elite_1()
+   msg("Movendo Para o Mapa")
+   LimpaTela()
+   AbrirMapas()
+   MapaDoMundo()
+   AreaDoCentroEspiritual()
+   PicoDoCaminhoParaCeu()
+   Mapa3()
+   Elite()
+   $x = porcentagem($xd, $x0, 33.5)
+   $y = porcentagem($yd, $y0, 25.5)
+   MouseClicar($x, $y)
+   Sleep(5)
+   MouseClicar($x, $y)
+   EntrarAgora()
+   DeslocamentoRapidoTela()
+   Aguardar()
+   Sleep(70000)
+EndFunc
+;###
+;================================================================
 
 
 
