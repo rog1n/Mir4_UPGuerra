@@ -5,17 +5,18 @@
 
 
 Global $AutoAtacar = "{b}"
+Global $Alvos = "{TAB}"
 Global $TeclaTeleporte = "{8}"
 Global $TeclaUlt = "{r}"
 Global $TeclaDash = "{LSHIFT}"
-;Global $Mapas = [CaminhoCeuSuperior_Elite_B2, LabirintoCaminhoParaCeu_3F_B2]
+;Global $Mapas = [CaminhoCeuSuperior_Elite_B2, LabirintoCaminhoParaCeu_3F_B2, LabirintoCaminhoParaCeu_3F_B3]
 Global $Mapas = [CaminhoCeuSuperior_Elite_B2, LabirintoCaminhoParaCeu_3F_B1, LabirintoCaminhoParaCeu_3F_B2, LabirintoCaminhoParaCeu_3F_B3, LabirintoCaminhoParaCeu_3F_B4, LabirintoCaminhoParaCeu_3F_B5]
 ;==========================
 Global $tela = "Mir4G[1]"
 Global $rodando
 Global $qtdv=-1 ; quantidade de voltas
 Global $qtdm=0 ;quantidade de mortes
-Global $x0
+Global $x0r
 Global $x1
 Global $y0
 Global $y1
@@ -23,11 +24,14 @@ Global $yd
 Global $xd
 Global $tx
 Global $ty
+Global $msglog
+Global $msglogOld = 5
 Global $porcentagemInicial
 Global $ultimaMsg = ""
 
-HotKeySet("{NUMPADDIV}", "DetectarMorte")
+HotKeySet("{NUMPADDIV}", "teste")
 HotKeySet("{NUMPADADD}", "Encontrar_Valores")
+HotKeySet("{NUMPADSUB}", "Encontrar_Cor")
 HotKeySet("{NUMPADMULT}", "_restart")
 HotKeySet("{pause}","pause")
 HotKeySet("{end}", "sair")
@@ -48,12 +52,22 @@ $y0 = $winsize[1] + $captionSize
 $porcentagemInicial = CalculaPorcentagem()
 pause()
 
+
+Func teste()
+   While 1
+	  InimigoProximo()
+	  Sleep(50)
+	  $msglog = 33
+   WEnd
+EndFunc
+
 While 1
 	While DetectarMorte() = 1
 	  Sleep(100)
 	WEnd
 	  ConsoleWrite("Inicial: " & $porcentagemInicial & " | Atual: " & CalculaPorcentagem() & @CRLF)
    If  CalculaPorcentagem() < $porcentagemInicial Then
+	  Msg("Morreu :|")
 	  $qtdm = $qtdm + 1
 	  $porcentagemInicial = CalculaPorcentagem()
 	  If $qtdm = 2 Then
@@ -74,10 +88,15 @@ While 1
 	  $morte = 0
 	 ; enconomiaEnergia()
 	  While $inimigo = 0 and $morte = 0
-		 msg("Up Ativado....")
-		 ;$inimigo = SaiuEcononomiaEnergia()
+		 		 ;$inimigo = SaiuEcononomiaEnergia()
 		 $inimigo = InimigoProximo()
+		 ;ConsoleWrite("inimigo=" & $morte & @CRLF)
+		 If $msglog <> $msglogOld Then
+			$msglogOld = $msglog
+		 EndIf
+		 msg("Upando....")
 		 $morte = DetectarMorte()
+		 ;ConsoleWrite("morte=" & $morte & @CRLF)
 		 Sleep(100)
 	  WEnd
 	  Fugir()

@@ -18,11 +18,11 @@ EndFunc
 EndFunc
 
  Func Encontrar_Cor()
-   $x = porcentagem($xd, $x0, 5)
-   $y = porcentagem($yd, $y0, 89.1)
+   $x = porcentagem($xd, $x0, 96.25)
+   $y = porcentagem($yd, $y0, 26.06)
 		$cor = Hex(PixelGetColor($x, $y),6)
 		ConsoleWrite($cor & @CRLF)
-  ; WEnd
+;~    WEnd
 
 EndFunc
 
@@ -49,7 +49,8 @@ Func Restart()
 EndFunc
 
 Func msg($mensagem)
-   If Not ($ultimaMsg == $mensagem) Then
+   ;ConsoleWrite("ultima mensage=" & $ultimaMsg & " mensagem atual:" & $mensagem & @CRLF)
+   If $ultimaMsg <> $mensagem Then
    Tooltip("VOLTAS:" & $qtdv & " | MORTES:" & $qtdm & " | "& $mensagem, $tx, $ty)
    ConsoleWrite(_NowTime() & " VOLTAS:" & $qtdv & " | MORTES:" & $qtdm & " | "& $mensagem & @CRLF)
    $ultimaMsg = $mensagem
@@ -75,18 +76,28 @@ EndFunc
 
 
 Func DetectarMorte()
-   ;limpaTela()
    $morreu = 0
    Local $aCoord = PixelSearch(porcentagem($xd, $x0, 1), porcentagem($yd, $y0, 1.5), porcentagem($xd, $x0, 2), porcentagem($yd, $y0, 3), 0xB5AE8A, 60);lvl aparecendo
    If @error Then
-	  msg("iiiii morreu...")
+	  msg("iiiii acho que pode ter morrido...")
 	  $morreu = 1
    EndIf
 return $morreu
 EndFunc
 
 
-
+Func InimigosAlvos()
+   Send($Alvos)
+   Sleep(300)
+   $x = porcentagem($xd, $x0, 96.25)
+   $y = porcentagem($yd, $y0, 26.06))
+   $cor = Hex(PixelGetColor($x , $y, 6)
+   If $cor <> 'F30523' Then
+	  MouseClicar($x, $y)
+   EndIf
+;76.56	17.29
+;92.66	38.83
+EndFunc
 
 
 
