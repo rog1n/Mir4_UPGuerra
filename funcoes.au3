@@ -18,16 +18,21 @@ EndFunc
 EndFunc
 
  Func Encontrar_Cor()
-   $x = porcentagem($xd, $x0, 96.25)
-   $y = porcentagem($yd, $y0, 26.06)
+   $x = pX(49.5)
+   $y = pY(81.65)
 		$cor = Hex(PixelGetColor($x, $y),6)
 		ConsoleWrite($cor & @CRLF)
 ;~    WEnd
 
 EndFunc
 
-Func porcentagem($tamanho, $origem, $deslocamento)
-   $retorno = $origem + ($tamanho * ($deslocamento / 100))
+Func pX($deslocamento)
+   $retorno = $x0 + ($xd * ($deslocamento / 100))
+   Return $retorno
+EndFunc
+
+Func pY($deslocamento)
+   $retorno = $y0 + ($yd * ($deslocamento / 100))
    Return $retorno
 EndFunc
 
@@ -64,7 +69,7 @@ EndFunc
 
 Func CalculaPorcentagem()
    $x = $x0
-   $y = porcentagem($yd, $y0, 89.1)
+   $y = pY(89.1)
    $cor = Hex(PixelGetColor($x, $y), 6)
    While $cor == '00F2FF'
 	  $x = $x + 1
@@ -77,7 +82,7 @@ EndFunc
 
 Func DetectarMorte()
    $morreu = 0
-   Local $aCoord = PixelSearch(porcentagem($xd, $x0, 1), porcentagem($yd, $y0, 1.5), porcentagem($xd, $x0, 2), porcentagem($yd, $y0, 3), 0xB5AE8A, 60);lvl aparecendo
+   Local $aCoord = PixelSearch(pX(1), pY(1.5), pX(2), pY(3), 0xB5AE8A, 60);lvl aparecendo
    If @error Then
 	  msg("iiiii acho que pode ter morrido...")
 	  $morreu = 1
@@ -89,8 +94,8 @@ EndFunc
 Func InimigosAlvos()
    Send($Alvos)
    Sleep(300)
-   $x = porcentagem($xd, $x0, 96.25)
-   $y = porcentagem($yd, $y0, 26.06))
+   $x = pX(96.25)
+   $y = pY(26.06))
    $cor = Hex(PixelGetColor($x , $y, 6)
    If $cor <> 'F30523' Then
 	  MouseClicar($x, $y)
@@ -99,7 +104,10 @@ Func InimigosAlvos()
 ;92.66	38.83
 EndFunc
 
+Func TeleporteSlot3()
+  ; 564C43
 
+EndFunc
 
 
 

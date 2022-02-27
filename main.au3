@@ -16,7 +16,7 @@ Global $tela = "Mir4G[1]"
 Global $rodando
 Global $qtdv=-1 ; quantidade de voltas
 Global $qtdm=0 ;quantidade de mortes
-Global $x0r
+Global $x0
 Global $x1
 Global $y0
 Global $y1
@@ -54,11 +54,12 @@ pause()
 
 
 Func teste()
-   While 1
-	  InimigoProximo()
-	  Sleep(50)
-	  $msglog = 33
-   WEnd
+   $cor = Hex(PixelGetColor(pX(48.91),pY(81.12)),6)
+   If $cor == '294586' Then
+	  ConsoleWrite("achou" & @CRLF)
+   Else
+	  ConsoleWrite($cor & @CRLF)
+   EndIf
 EndFunc
 
 While 1
